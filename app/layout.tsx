@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lexend.variable}`}>
+    <html lang="en" className={`${lexend.variable}`} data-scroll-behavior="smooth">
       <body className={`${lexend.className} min-h-screen bg-black text-white antialiased`}>
         {children}
       </body>
