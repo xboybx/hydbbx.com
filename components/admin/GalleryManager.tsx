@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function GalleryManager() {
   const [images, setImages] = useState<any[]>([]);
@@ -58,8 +59,16 @@ export default function GalleryManager() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {images.map((image) => (
             <div key={image._id} className="bg-white/5 border border-white/10 p-4 rounded-lg flex flex-col">
-              <img src={image.image} alt={image.title} className="w-full h-48 object-cover rounded-lg" />
-              <p className="text-white font-bold mt-3 mb-2">{image.title}</p>
+              <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                <Image 
+                  src={image.image} 
+                  alt={image.title} 
+                  fill 
+                  className="object-cover transition-transform hover:scale-105 duration-500" 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+              <p className="text-white font-bold mt-3 mb-2 truncate">{image.title}</p>
               <button onClick={() => handleDelete(image._id)} className="bg-red-600/80 text-white px-2 py-2 rounded-lg mt-auto hover:bg-red-700 transition-colors">Delete</button>
             </div>
           ))}

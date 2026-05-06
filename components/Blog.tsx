@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Section from "./Section";
 import LoadingSpinner from "./LoadingSpinner";
+import Image from "next/image";
 
 interface BlogType {
   _id: string;
@@ -72,15 +73,19 @@ export default function Blog({ initialLimit = 0 }: { initialLimit?: number }) {
               key={blog._id}
               className="bg-[#111] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
-              <img
-                src={
-                  blog.image.startsWith("data:image")
-                    ? blog.image
-                    : `${blog.image}?tr=w-400,q-80`
-                }
-                alt={blog.title}
-                className="w-full h-56 object-cover"
-              />
+              <div className="relative w-full h-56 overflow-hidden">
+                <Image
+                  src={
+                    blog.image.startsWith("data:image")
+                      ? blog.image
+                      : blog.image // next/image handles the optimization if configured correctly, but we can also pass a custom loader if needed.
+                  }
+                  alt={blog.title}
+                  fill
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2 text-white">
                   {blog.title}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function BlogManager() {
   const [pendingBlogs, setPendingBlogs] = useState<any[]>([]);
@@ -60,7 +61,15 @@ export default function BlogManager() {
               <div key={blog._id} className="bg-white/5 border border-white/10 p-4 rounded-lg flex flex-col">
                 <h3 className="text-xl font-bold text-white mb-1">{blog.title}</h3>
                 <p className="text-white/60 mb-2">By {blog.author}</p>
-                <img src={blog.image} alt={blog.title} className="w-full h-48 object-cover rounded-lg my-2" />
+                <div className="relative w-full h-48 rounded-lg overflow-hidden my-2">
+                  <Image 
+                    src={blog.image} 
+                    alt={blog.title} 
+                    fill 
+                    className="object-cover transition-transform hover:scale-105 duration-500" 
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
                 <p className="text-white/80 text-sm line-clamp-3">{blog.content}</p>
                 <div className="mt-4 flex gap-2">
                   <button onClick={() => handleApprove(blog._id)} className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors font-bold">Approve</button>
@@ -77,7 +86,15 @@ export default function BlogManager() {
               <div key={blog._id} className="bg-white/5 border border-white/10 p-4 rounded-lg flex flex-col">
                 <h3 className="text-xl font-bold text-white mb-1">{blog.title}</h3>
                 <p className="text-white/60 mb-2">By {blog.author}</p>
-                <img src={blog.image} alt={blog.title} className="w-full h-48 object-cover rounded-lg my-2" />
+                <div className="relative w-full h-48 rounded-lg overflow-hidden my-2">
+                  <Image 
+                    src={blog.image} 
+                    alt={blog.title} 
+                    fill 
+                    className="object-cover transition-transform hover:scale-105 duration-500" 
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
                 <p className="text-white/80 text-sm line-clamp-3">{blog.content}</p>
                 <div className="mt-4">
                   <button onClick={() => handleDelete(blog._id)} className="w-full bg-red-600/80 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors font-bold">Delete</button>

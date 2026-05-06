@@ -115,7 +115,7 @@ export default function WriteBlog() {
           className="max-w-5xl mx-auto glass-effect p-8 rounded-lg shadow-lg border border-white/10"
         >
           {errors.form && <p className="text-red-500 mb-4 text-center">{errors.form}</p>}
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column: Info & Image */}
             <div className="space-y-6">
@@ -163,7 +163,7 @@ export default function WriteBlog() {
                   />
                 </div>
                 {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image}</p>}
-                
+
                 {image && (
                   <div className="mt-4 animate-in fade-in zoom-in duration-300">
                     <p className="text-xs text-green-400 mb-2 flex items-center gap-1">

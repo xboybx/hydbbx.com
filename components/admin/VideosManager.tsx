@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function VideosManager() {
   const [videos, setVideos] = useState<any[]>([]);
@@ -58,7 +59,15 @@ export default function VideosManager() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {videos.map((video) => (
             <div key={video._id} className="bg-white/5 border border-white/10 p-4 rounded-lg flex flex-col">
-              <img src={video.thumbnail} alt={video.title} className="w-full h-48 object-cover rounded-lg" />
+              <div className="relative w-full h-48 rounded-lg overflow-hidden">
+                <Image 
+                  src={video.thumbnail} 
+                  alt={video.title} 
+                  fill 
+                  className="object-cover transition-transform hover:scale-105 duration-500" 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
               <h3 className="text-white font-bold mt-3 mb-2">{video.title}</h3>
               <button onClick={() => handleDelete(video._id)} className="bg-red-600/80 text-white px-2 py-2 rounded-lg mt-auto hover:bg-red-700 transition-colors">Delete</button>
             </div>

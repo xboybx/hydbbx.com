@@ -3,11 +3,26 @@
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import EventsManager from "@/components/admin/EventsManager";
-import GalleryManager from "@/components/admin/GalleryManager";
-import VideosManager from "@/components/admin/VideosManager";
-import HomeImageManager from "@/components/admin/HomeImageManager";
-import BlogManager from "@/components/admin/BlogManager";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+import DashboardSkeleton from "@/components/admin/DashboardSkeleton";
+
+// Dynamically import heavy manager components
+const EventsManager = dynamic(() => import("@/components/admin/EventsManager"), {
+  loading: () => <DashboardSkeleton />,
+});
+const GalleryManager = dynamic(() => import("@/components/admin/GalleryManager"), {
+  loading: () => <DashboardSkeleton />,
+});
+const VideosManager = dynamic(() => import("@/components/admin/VideosManager"), {
+  loading: () => <DashboardSkeleton />,
+});
+const HomeImageManager = dynamic(() => import("@/components/admin/HomeImageManager"), {
+  loading: () => <DashboardSkeleton />,
+});
+const BlogManager = dynamic(() => import("@/components/admin/BlogManager"), {
+  loading: () => <DashboardSkeleton />,
+});
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -107,8 +122,11 @@ export default function AdminDashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, type: "spring" }}
           >
-            {getActiveManager()}
+            <Suspense fallback={<DashboardSkeleton />}>
+              {getActiveManager()}
+            </Suspense>
           </motion.div>
+
         </div>
       </div>
     </div>

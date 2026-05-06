@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Play, X } from "lucide-react";
 import Section from "./Section";
 import LoadingSpinner from "./LoadingSpinner";
+import Image from "next/image";
 
 interface VideoType {
   _id: string;
@@ -73,11 +74,12 @@ export default function Videos() {
               onClick={() => setSelectedVideo(video)}
             >
               <div className="relative overflow-hidden rounded-xl aspect-video">
-                <img
+                <Image
                   src={video.thumbnail}
                   alt={video.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="lazy"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300" />
                 <motion.div

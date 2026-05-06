@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function OurClients() {
   const logos = [
@@ -37,11 +38,15 @@ export default function OurClients() {
               key={index}
               className="flex-shrink-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
             >
-              <img
-                src={logo}
-                alt="Client logo"
-                className="h-8 md:h-12 w-auto object-contain"
-              />
+              <div className="relative h-8 md:h-12 w-24 md:w-32">
+                <Image
+                  src={logo}
+                  alt="Client logo"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100px, 150px"
+                />
+              </div>
             </div>
           ))}
         </motion.div>

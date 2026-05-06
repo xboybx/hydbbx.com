@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function HomeImageManager() {
   const [images, setImages] = useState<any[]>([]);
@@ -57,8 +58,16 @@ export default function HomeImageManager() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {images.map((image) => (
             <div key={image._id} className="bg-white/5 border border-white/10 p-4 rounded-lg flex flex-col">
-              <img src={image.image} alt="Home Image" className="w-full h-48 object-cover rounded-lg" />
-              <button onClick={() => handleDelete(image._id)} className="bg-red-600/80 text-white px-2 py-2 rounded-lg mt-3 hover:bg-red-700 transition-colors">Delete</button>
+              <div className="relative w-full h-48 rounded-lg overflow-hidden mb-3">
+                <Image 
+                  src={image.image} 
+                  alt="Home Image" 
+                  fill 
+                  className="object-cover transition-transform hover:scale-105 duration-500" 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+              <button onClick={() => handleDelete(image._id)} className="bg-red-600/80 text-white px-2 py-2 rounded-lg mt-auto hover:bg-red-700 transition-colors">Delete</button>
             </div>
           ))}
         </div>

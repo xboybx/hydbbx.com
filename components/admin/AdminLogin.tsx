@@ -33,7 +33,7 @@ export default function AdminLogin() {
       className="min-h-screen bg-cover bg-center flex items-center justify-center md:justify-end p-8 md:pr-72"
       style={{
         backgroundImage:
-          "url('https://ik.imagekit.io/qci75z79t/BBx%20Home%20Pics/Copilot_20260505_180001.png')",
+          "url('https://ik.imagekit.io/qci75z79t/BBx%20Home%20Pics/hjzzxkdu7zfrtrrf0wam.webp')",
       }}
     >
       <div className="max-w-md w-full space-y-8 p-8 glass-effect border border-white/10 rounded-xl shadow-2xl">

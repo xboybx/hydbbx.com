@@ -2,33 +2,32 @@
 
 import { useState, useEffect } from "react";
 import { LuMicVocal } from "react-icons/lu";
+import Image from "next/image";
 
 export default function ImageCarousel() {
   const [currentImage, setCurrentImage] = useState(0);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>(["/home1.webp", "/home2.webp"]);
   const [isCarouselVisible, setIsCarouselVisible] = useState(false);
 
   useEffect(() => {
-    const localImages = [
-      "/home1.webp",
-      "/home2.webp",
-      "https://ik.imagekit.io/qci75z79t/BBx%20Home%20Pics/IMG_7329.JPG?updatedAt=1764590542631",
-      "https://ik.imagekit.io/qci75z79t/BBx%20Home%20Pics/Home%20pics/home3.webp?updatedAt=1764590230088",
-      "https://ik.imagekit.io/qci75z79t/BBx%20Home%20Pics/Home%20pics/home4.webp?updatedAt=1764590230634",
-      "https://ik.imagekit.io/qci75z79t/BBx%20Home%20Pics/Home%20pics/Home5.webp?updatedAt=1764590230074",
-      "https://ik.imagekit.io/qci75z79t/BBx%20Home%20Pics/Home%20pics/Home6.webp?updatedAt=1764590230078",
-    ];
+    const fetchImages = async () => {
+      try {
+        const res = await fetch("/api/home-images");
+        const data = await res.json();
 
-    if (localImages.length > 0) {
-      const firstImage = new Image();
-      firstImage.src = localImages[0];
-      firstImage.onload = () => {
-        setImages(localImages);
+        if (data && data.length > 0) {
+          // Keep local images first for performance, then append DB images
+          const dbImages = data.map((item: any) => item.image);
+          setImages(["/home1.webp", "/home2.webp", ...dbImages]);
+        }
+      } catch (error) {
+        console.error("Error fetching carousel images:", error);
+      } finally {
         setIsCarouselVisible(true);
-      };
-    } else {
-      setIsCarouselVisible(true);
-    }
+      }
+    };
+
+    fetchImages();
   }, []);
 
   useEffect(() => {
@@ -42,21 +41,22 @@ export default function ImageCarousel() {
   return (
     <div id="home" className="relative h-screen overflow-hidden bg-black">
       <div
-        className={`absolute inset-0 transition-opacity duration-1000 ${
-          isCarouselVisible ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute inset-0 transition-opacity duration-400 ${isCarouselVisible ? "opacity-100" : "opacity-0"
+          }`}
       >
         {images.map((src, index) => (
           <div
             key={`${src}-${index}`}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentImage ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentImage ? "opacity-100" : "opacity-0"
+              }`}
           >
-            <img
+            <Image
               src={src}
-              alt="Landscape"
-              className="w-full h-full object-cover"
+              alt={`Slide ${index + 1}`}
+              fill
+              priority={index === 0}
+              className="object-cover"
+              sizes="100vw"
             />
             <div className="hero-gradient absolute inset-0" />
           </div>

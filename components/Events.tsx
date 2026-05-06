@@ -5,6 +5,7 @@ import { Calendar, Clock, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Section from "./Section";
 import LoadingSpinner from "./LoadingSpinner";
+import Image from "next/image";
 
 interface EventType {
   _id: string;
@@ -95,11 +96,15 @@ function EventModal({ event, onClose }: { event: EventType; onClose: () => void 
             </button>
 
             {event.image && (
-              <img
-                src={event.image}
-                alt="Event"
-                className="w-full h-64 object-cover rounded mb-6"
-              />
+              <div className="relative w-full h-64 mb-6">
+                <Image
+                  src={event.image}
+                  alt="Event"
+                  fill
+                  className="object-cover rounded"
+                  sizes="(max-width: 768px) 100vw, 640px"
+                />
+              </div>
             )}
 
             <div className="flex flex-col md:flex-row md:items-start gap-6">
@@ -231,11 +236,15 @@ export default function Events() {
                 >
                   <div className="relative">
                     {event.image && (
-                      <img
-                        src={event.image}
-                        alt="Event"
-                        className="w-full h-56 object-cover rounded-t-2xl transition-all duration-500 group-hover:scale-105"
-                      />
+                      <div className="relative w-full h-56 rounded-t-2xl overflow-hidden group">
+                        <Image
+                          src={event.image}
+                          alt="Event"
+                          fill
+                          className="object-cover transition-all duration-500 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
                     )}
                     <span className="absolute top-4 left-4 bg-gradient-to-r from-[#0066FF] to-blue-400 text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
                       {idx === 0 ? "🔥 Featured" : "Beatbox Event"}
