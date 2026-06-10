@@ -71,9 +71,9 @@ export default function Blog({ initialLimit = 0 }: { initialLimit?: number }) {
             <Link
               href={`/blog/${blog._id}`}
               key={blog._id}
-              className="bg-[#111] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="bg-[#111] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-row md:flex-col items-stretch border border-white/5 hover:border-white/10"
             >
-              <div className="relative w-full h-56 overflow-hidden">
+              <div className="relative w-28 sm:w-36 md:w-full min-h-[112px] sm:min-h-[144px] md:min-h-0 h-auto md:h-56 overflow-hidden flex-shrink-0">
                 <Image
                   src={
                     blog.image.startsWith("data:image")
@@ -83,16 +83,16 @@ export default function Blog({ initialLimit = 0 }: { initialLimit?: number }) {
                   alt={blog.title}
                   fill
                   className="object-cover transition-transform duration-500 hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 150px, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-white">
+              <div className="p-4 md:p-6 flex-grow min-w-0">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold mb-1 md:mb-2 text-white line-clamp-2">
                   {blog.title}
                 </h3>
-                <p className="text-white/60 mb-4">By {blog.author}</p>
-                <p className="text-white/80">
-                  {blog.content.substring(0, 100)}...
+                <p className="text-white/60 text-[10px] sm:text-xs md:text-sm mb-1.5 md:mb-3">By {blog.author}</p>
+                <p className="text-white/80 text-xs md:text-sm line-clamp-2 md:line-clamp-3">
+                  {blog.content.replace(/[#*`>_\-]/g, "").substring(0, 90)}...
                 </p>
               </div>
             </Link>

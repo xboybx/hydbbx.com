@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lexend:wght@100..900&display=swap');
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @layer base {
   :root {
@@ -66,6 +67,26 @@ body::-webkit-scrollbar {
 
   .upcoming-event {
     @apply relative;
+  }
+
+  /* Custom prose styling to match community branding */
+  .prose {
+    --tw-prose-bullets: #0066FF;
+    --tw-prose-counters: #0066FF;
+    --tw-prose-quote-borders: #0066FF;
+    --tw-prose-links: #0066FF;
+  }
+
+  .prose a {
+    @apply hover:text-blue-400 hover:underline transition-colors;
+  }
+
+  .prose pre {
+    @apply border border-white/10 bg-white/5! rounded-xl!;
+  }
+
+  .prose blockquote {
+    @apply font-normal italic text-white/90;
   }
 }
 

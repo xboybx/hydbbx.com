@@ -4,6 +4,10 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Section from "./Section";
 import { upload } from "@imagekit/next";
+import ReactMarkdown from "react-markdown";
+import remarkBreaks from "remark-breaks";
+import remarkGfm from "remark-gfm";
+import { Bold, Italic, Heading1, Heading2, Heading3, List, ListOrdered, Quote, Link as LinkIcon, CornerDownLeft, Eye, Edit2 } from "lucide-react";
 
 const publicKey = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
 const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
@@ -25,17 +29,43 @@ export default function WriteBlog() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"write" | "preview">("write");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
+
+  const insertMarkdown = (prefix: string, suffix: string = "") => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+    const selectedText = text.substring(start, end);
+
+    const replacement = prefix + (selectedText || "text") + suffix;
+    const newContent = text.substring(0, start) + replacement + text.substring(end);
+
+    setContent(newContent);
+
+    // Focus the textarea and set the selection around the text
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(
+        start + prefix.length,
+        start + prefix.length + (selectedText || "text").length
+      );
+    }, 0);
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // 5MB Size Limit
-    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    // 3MB Size Limit
+    const maxSize = 3 * 1024 * 1024; // 3MB in bytes
     if (file.size > maxSize) {
-      setErrors({ image: "File is too large! Please upload an image smaller than 5MB." });
+      setErrors({ image: "File is too large! Please upload an image smaller than 3MB." });
       return;
     }
 
@@ -180,17 +210,155 @@ export default function WriteBlog() {
 
             {/* Right Column: Content */}
             <div className="flex flex-col h-full">
-              <label htmlFor="content" className="block text-white/80 mb-2 font-medium">
+              <label className="block text-white/80 mb-2 font-medium">
                 Blog Content (Markdown supported)
               </label>
-              <textarea
-                id="content"
-                placeholder="Share your thoughts with the community..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className={`flex-grow w-full p-4 bg-white/10 backdrop-blur-md text-white placeholder:text-gray-500 rounded-xl border ${errors.content ? 'border-red-500' : 'border-white/20'} focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all min-h-[300px] lg:min-h-0`}
-              ></textarea>
-              {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
+              
+              <div className="flex flex-col h-full">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-4 mb-4 gap-4">
+                  {/* Tabs: Write and Preview */}
+                  <div className="flex bg-white/5 p-1 rounded-xl border border-white/10 w-fit">
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("write")}
+                      className={`px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all ${
+                        activeTab === "write"
+                          ? "bg-blue-600 text-white shadow-md"
+                          : "text-white/60 hover:text-white"
+                      }`}
+                    >
+                      <Edit2 className="w-4 h-4" />
+                      Write
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab("preview")}
+                      className={`px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all ${
+                        activeTab === "preview"
+                          ? "bg-blue-600 text-white shadow-md"
+                          : "text-white/60 hover:text-white"
+                      }`}
+                    >
+                      <Eye className="w-4 h-4" />
+                      Preview
+                    </button>
+                  </div>
+
+                  {/* Toolbar (only visible in Write tab) */}
+                  {activeTab === "write" && (
+                    <div className="flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10 overflow-x-auto scrollbar-hide py-1.5 px-2 max-w-full">
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("**", "**")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Bold"
+                      >
+                        <Bold className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("*", "*")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Italic"
+                      >
+                        <Italic className="w-4 h-4" />
+                      </button>
+                      <div className="h-4 w-[1px] bg-white/10 mx-1 flex-shrink-0" />
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("# ", "")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Heading 1"
+                      >
+                        <Heading1 className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("## ", "")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Heading 2"
+                      >
+                        <Heading2 className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("### ", "")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Heading 3"
+                      >
+                        <Heading3 className="w-4 h-4" />
+                      </button>
+                      <div className="h-4 w-[1px] bg-white/10 mx-1 flex-shrink-0" />
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("- ", "")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Bullet List"
+                      >
+                        <List className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("1. ", "")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Numbered List"
+                      >
+                        <ListOrdered className="w-4 h-4" />
+                      </button>
+                      <div className="h-4 w-[1px] bg-white/10 mx-1 flex-shrink-0" />
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("> ", "")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Blockquote"
+                      >
+                        <Quote className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("[", "](url)")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Link"
+                      >
+                        <LinkIcon className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => insertMarkdown("  \n", "")}
+                        className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex-shrink-0"
+                        title="Line Break"
+                      >
+                        <CornerDownLeft className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Content Body */}
+                {activeTab === "write" ? (
+                  <div className="flex flex-col flex-grow">
+                    <textarea
+                      ref={textareaRef}
+                      id="content"
+                      placeholder="Share your thoughts with the community... (Markdown is supported! Use the toolbar to insert formatting)"
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
+                      className={`flex-grow w-full p-4 bg-white/10 backdrop-blur-md text-white placeholder:text-gray-500 rounded-xl border ${errors.content ? 'border-red-500' : 'border-white/20'} focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all min-h-[350px] lg:min-h-0`}
+                    ></textarea>
+                    {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
+                  </div>
+                ) : (
+                  <div className="flex-grow w-full p-6 bg-white/5 border border-white/10 rounded-xl overflow-y-auto min-h-[350px] max-h-[500px]">
+                    <div className="prose prose-sm sm:prose-base md:prose-lg prose-invert max-w-none text-white/80">
+                      {content ? (
+                        <ReactMarkdown remarkPlugins={[remarkBreaks, remarkGfm]}>{content}</ReactMarkdown>
+                      ) : (
+                        <p className="text-white/40 italic">Nothing to preview yet. Start writing in the Write tab!</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

@@ -130,10 +130,8 @@ export default function DomeGallery({
 
   const rotationRef = useRef({ x: 0, y: 0 });
   const startRotRef = useRef({ x: 0, y: 0 });
-  const startPosRef = useRef<{ x: number; y: number } | null>(null);
   const draggingRef = useRef(false);
   const inertiaRAF = useRef<number | null>(null);
-  const pointerTypeRef = useRef<'mouse' | 'pen' | 'touch'>('mouse');
   const openingRef = useRef(false);
   const dragRAF = useRef<number | null>(null);
 
@@ -282,24 +280,19 @@ export default function DomeGallery({
 
   useGesture(
     {
-      onDragStart: ({ event }) => {
+      onDragStart: () => {
         if (openingRef.current) return;
         stopInertia();
-        const evt = event as PointerEvent;
-        pointerTypeRef.current = (evt.pointerType as any) || 'mouse';
         draggingRef.current = true;
         startRotRef.current = { ...rotationRef.current };
-        startPosRef.current = { x: evt.clientX, y: evt.clientY };
         rootRef.current?.classList.add('is-dragging');
       },
-      onDrag: ({ event, last, velocity: velArr = [0, 0], direction: dirArr = [0, 0] }) => {
-        if (openingRef.current || !draggingRef.current || !startPosRef.current) return;
-        const evt = event as PointerEvent;
-        const dx = evt.clientX - startPosRef.current.x;
-        const dy = evt.clientY - startPosRef.current.y;
+      onDrag: ({ last, movement: [mx, my], velocity: [vx, vy], direction: [dx, dy], event }) => {
+        if (openingRef.current || !draggingRef.current) return;
         
-        const nextX = clamp(startRotRef.current.x - dy / dragSensitivity, -maxVerticalRotationDeg, maxVerticalRotationDeg);
-        const nextY = startRotRef.current.y + dx / dragSensitivity;
+        // Use mx/my directly - they are normalized and support both mouse and touch seamlessly
+        const nextX = clamp(startRotRef.current.x - my / dragSensitivity, -maxVerticalRotationDeg, maxVerticalRotationDeg);
+        const nextY = startRotRef.current.y + mx / dragSensitivity;
         rotationRef.current = { x: nextX, y: nextY };
         
         if (!dragRAF.current) {
@@ -312,11 +305,14 @@ export default function DomeGallery({
         if (last) {
           draggingRef.current = false;
           rootRef.current?.classList.remove('is-dragging');
-          if (Math.abs(dx) < 5 && Math.abs(dy) < 5) {
-            const potential = (evt.target as Element).closest('.item__image') as HTMLElement;
+          
+          // Determine if it was a touch tap or short click
+          if (Math.abs(mx) < 5 && Math.abs(my) < 5) {
+            const potential = (event.target as Element).closest('.item__image') as HTMLElement;
             if (potential) openItem(potential);
           } else {
-            startInertia(velArr[0] * dirArr[0], velArr[1] * dirArr[1]);
+            // Apply inertia with proper velocity components
+            startInertia(vx * dx, vy * dy);
           }
         }
       }
