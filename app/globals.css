@@ -134,6 +134,66 @@ body::-webkit-scrollbar {
   animation: float 6s ease-in-out infinite;
 }
 
+@keyframes pulse-glow {
+  0%, 100% {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: none;
+  }
+  50% {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes btn-shimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.btn-wildcard-premium {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(270deg, #111111, #444444, #222222, #888888);
+  background-size: 400% 400%;
+  animation: gradient-shift 6s ease infinite;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-wildcard-premium:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4), 0 0 35px rgba(115, 115, 115, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-wildcard-premium::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  animation: btn-shimmer 3.5s infinite linear;
+}
+
 @keyframes blink {
   0%, 100% { border-color: transparent; }
   50% { border-color: #0066FF; }
@@ -192,4 +252,17 @@ body::-webkit-scrollbar {
     max-height: 100%;
     object-fit: contain;
   }
+}
+
+@keyframes button-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.65);
+  }
+}
+
+.animate-button-glow {
+  animation: button-glow-pulse 3s infinite ease-in-out;
 }

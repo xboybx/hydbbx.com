@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isWildcardActive, setIsWildcardActive] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,7 +18,33 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const checkWildcard = async () => {
+      try {
+        const res = await fetch("/api/wildcard");
+        const data = await res.json();
+        if (data && data.isActive) {
+          setIsWildcardActive(true);
+        }
+      } catch (err) {
+        console.error("Failed to check wildcard status", err);
+      }
+    };
+    checkWildcard();
+  }, []);
+
+  const sections = isWildcardActive
+    ? ["home", "about", "wildcard", "events", "gallery", "videos", "blog", "contact"]
+    : ["home", "about", "events", "gallery", "videos", "blog", "contact"];
+
   const scrollToSection = (id: string) => {
+    if (id === "wildcard") {
+      window.location.href = "/wildcard";
+      setTimeout(() => {
+        setIsMobileMenuOpen(false);
+      }, 300);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       const offset = 80;
@@ -26,6 +54,8 @@ export default function Header() {
         top: offsetPosition,
         behavior: "smooth",
       });
+    } else {
+      window.location.href = `/#${id}`;
     }
     setTimeout(() => {
       setIsMobileMenuOpen(false);
@@ -34,33 +64,26 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed w-full z-50 transition-all duration-500 ${
-        isScrolled ? "glass-effect" : "bg-transparent"
-      }`}
+      className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? "glass-effect" : "bg-transparent"
+        }`}
     >
       <nav className="h-20 px-8 flex items-center justify-between">
-        <motion.img
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="h-12"
-          src="/HBX logoo.png"
-          alt="Logo"
-        />
+        <Link href="/">
+          <motion.img
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="h-12 cursor-pointer transition-transform hover:scale-102 duration-300"
+            src="/HBX logoo.png"
+            alt="Logo"
+          />
+        </Link>
 
         <div className="hidden lg:flex space-x-12 mr-11">
-          {[
-            "home",
-            "about",
-            "events",
-            "gallery",
-            "videos",
-            "blog",
-            "contact",
-          ].map((section) => (
+          {sections.map((section) => (
             <button
               key={section}
               onClick={() => scrollToSection(section)}
-              className="nav-link"
+              className={`nav-link ${section === "wildcard" ? "animate-pulse-glow font-bold" : ""}`}
             >
               {section.toUpperCase()}
             </button>
@@ -84,19 +107,12 @@ export default function Header() {
             className="lg:hidden glass-effect"
           >
             <div className="py-4 px-4 space-y-4">
-              {[
-                "home",
-                "about",
-                "events",
-                "gallery",
-                "videos",
-                "blog",
-                "contact",
-              ].map((section) => (
+              {sections.map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className="block w-full text-left px-4 py-2 nav-link"
+                  className={`block w-full text-left px-4 py-2 nav-link ${section === "wildcard" ? "animate-pulse-glow font-bold" : ""
+                    }`}
                 >
                   {section.toUpperCase()}
                 </button>

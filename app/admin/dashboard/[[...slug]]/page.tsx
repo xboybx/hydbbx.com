@@ -23,6 +23,9 @@ const HomeImageManager = dynamic(() => import("@/components/admin/HomeImageManag
 const BlogManager = dynamic(() => import("@/components/admin/BlogManager"), {
   loading: () => <DashboardSkeleton />,
 });
+const WildcardManager = dynamic(() => import("@/components/admin/WildcardManager"), {
+  loading: () => <DashboardSkeleton />,
+});
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -40,6 +43,7 @@ export default function AdminDashboardPage() {
     if (pathname?.includes("/videos")) return <VideosManager />;
     if (pathname?.includes("/home-images")) return <HomeImageManager />;
     if (pathname?.includes("/blogs")) return <BlogManager />;
+    if (pathname?.includes("/wildcard")) return <WildcardManager />;
     return null;
   };
 
@@ -66,6 +70,7 @@ export default function AdminDashboardPage() {
     { href: "/admin/dashboard/videos", label: "Manage Videos" },
     { href: "/admin/dashboard/home-images", label: "Manage Home Images" },
     { href: "/admin/dashboard/blogs", label: "Manage Blogs" },
+    { href: "/admin/dashboard/wildcard", label: "Manage Wildcard" },
   ];
 
   return (
@@ -101,7 +106,7 @@ export default function AdminDashboardPage() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8"
           >
             {navItems.map((item) => (
               <Link href={item.href} key={item.href}>

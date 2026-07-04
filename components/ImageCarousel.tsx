@@ -8,6 +8,22 @@ export default function ImageCarousel() {
   const [currentImage, setCurrentImage] = useState(0);
   const [images, setImages] = useState<string[]>(["/home1.webp", "/home2.webp"]);
   const [isCarouselVisible, setIsCarouselVisible] = useState(false);
+  const [isWildcardActive, setIsWildcardActive] = useState(false);
+
+  useEffect(() => {
+    const checkWildcard = async () => {
+      try {
+        const res = await fetch("/api/wildcard");
+        const data = await res.json();
+        if (data && data.isActive) {
+          setIsWildcardActive(true);
+        }
+      } catch (err) {
+        console.error("Error checking wildcard status in ImageCarousel:", err);
+      }
+    };
+    checkWildcard();
+  }, []);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -63,7 +79,7 @@ export default function ImageCarousel() {
         ))}
       </div>
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-center p-8 max-w-5xl mt-80">
+        <div className="text-center p-8 max-w-5xl mt-28 md:mt-36">
           <LuMicVocal className="w-16 h-16 mx-auto mb-6 text-white animate-pulse" />
           <h1 className="text-4xl md:text-8xl font-bold mb-8 text-gradient tracking-tight">
             Hyderabad Beatbox Community
@@ -71,6 +87,16 @@ export default function ImageCarousel() {
           <p className="text-xl md:text-xl text-white/60 max-w-2xl mx-auto">
             Uniting rhythms, creating beats, building community
           </p>
+          {isWildcardActive && (
+            <button
+              onClick={() => {
+                window.location.href = "/wildcard";
+              }}
+              className="mt-8 px-6 sm:px-8 py-3.5 sm:py-4 text-white rounded-full font-bold text-xs sm:text-sm md:text-base hover:scale-105 transition-all duration-300 cursor-pointer inline-block font-sans max-w-full btn-wildcard-premium"
+            >
+              Submit Wildcards Now!
+            </button>
+          )}
         </div>
       </div>
     </div>
