@@ -25,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lexend.variable}`} data-scroll-behavior="smooth">
-      <body className={`${lexend.className} min-h-screen bg-black text-white antialiased`}>
+    <html lang="en" className={`${lexend.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
+      <body className={`${lexend.className} min-h-screen bg-black text-white antialiased`} suppressHydrationWarning>
         {children}
       </body>
     </html>
