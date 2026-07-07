@@ -87,16 +87,16 @@ export default function ImageCarousel() {
           <p className="text-xl md:text-xl text-white/60 max-w-2xl mx-auto">
             Uniting rhythms, creating beats, building community
           </p>
-          {isWildcardActive && (
-            // <button
-            //   onClick={() => {
-            //     window.location.href = "/wildcard";
-            //   }}
-            //   className="mt-8 px-6 sm:px-8 py-3.5 sm:py-4 text-white rounded-full font-bold text-xs sm:text-sm md:text-base hover:scale-105 transition-all duration-300 cursor-pointer inline-block font-sans max-w-full btn-wildcard-premium"
-            // >
-            //   Submit Wildcards Now!
-            // </button>
-          )}
+          {/* {isWildcardActive && (
+            <button
+              onClick={() => {
+                window.location.href = "/wildcard";
+              }}
+              className="mt-8 px-6 sm:px-8 py-3.5 sm:py-4 text-white rounded-full font-bold text-xs sm:text-sm md:text-base hover:scale-105 transition-all duration-300 cursor-pointer inline-block font-sans max-w-full btn-wildcard-premium"
+            >
+              Submit Wildcards Now!
+            </button>
+          )} */}
         </div>
       </div>
     </div>
