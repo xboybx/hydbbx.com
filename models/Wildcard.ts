@@ -8,19 +8,17 @@ const wildcardSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    default: 'Beatbox Championship Wildcard Submission 2026 All India',
+    default: 'HYDERABAD BEATBOX CHAMPIONSHIP 2026 ALL INDIA CATEGORY',
   },
   description: {
     type: String,
     required: true,
-    default: `# HYDERABAD BEATBOX CHAMPIONSHIP 2026
+    default: `# HYDERABAD BEATBOX CHAMPIONSHIP 2026 ALL INDIA CATEGORY
 ## ALL INDIA SOLO WILDCARD GUIDELINES
 
 ---
 
 ## Wildcard Submission Window
-
-**Opens:** 10 July 2026
 
 **Deadline:** 10 August 2026 | 12:00 AM (IST)
 

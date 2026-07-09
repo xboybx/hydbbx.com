@@ -5,21 +5,21 @@ import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import { Metadata } from 'next';
-import { 
-  Calendar, 
-  User, 
-  Video, 
-  Clock, 
-  Check, 
-  X, 
-  Mic, 
-  FileText, 
-  Scale, 
-  Trophy, 
-  AlertOctagon, 
-  DollarSign, 
-  CheckSquare, 
-  Info 
+import {
+  Calendar,
+  User,
+  Video,
+  Clock,
+  Check,
+  X,
+  Mic,
+  FileText,
+  Scale,
+  Trophy,
+  AlertOctagon,
+  DollarSign,
+  CheckSquare,
+  Info
 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -81,7 +81,7 @@ export default async function WildcardPage() {
   if (!wildcard) {
     wildcard = {
       isActive: false,
-      title: "Beatbox Championship Wildcard Submission 2026 All India",
+      title: "HYDERABAD BEATBOX CHAMPIONSHIP 2026 ALL INDIA CATEGORY",
       description: "",
       poster: "",
       googleFormUrl: "",
@@ -90,7 +90,7 @@ export default async function WildcardPage() {
 
   // Detect if the description matches the official HBC 2026 guidelines
   const isHbcGuidelines = wildcard.description && (
-    wildcard.description.includes("HYDERABAD BEATBOX CHAMPIONSHIP") || 
+    wildcard.description.includes("HYDERABAD BEATBOX CHAMPIONSHIP") ||
     wildcard.description.includes("ALL INDIA SOLO WILDCARD GUIDELINES")
   );
 
@@ -143,13 +143,9 @@ export default async function WildcardPage() {
 
               {/* Left Column: Guidelines details (Order 2 on mobile, 1 on desktop) */}
               <div className="order-2 lg:order-1 lg:col-span-8 space-y-8">
-                
+
                 {/* Meta details at the very top */}
                 <div className="flex flex-wrap items-center gap-6 text-sm text-white/50">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-sky-400" />
-                    <span>July 10, 2026</span>
-                  </div>
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4 text-sky-400" />
                     <span>Hyderabad Beatbox Community</span>
@@ -170,7 +166,7 @@ export default async function WildcardPage() {
                 {isHbcGuidelines ? (
                   /* Premium Styled Guidelines Layout */
                   <div className="space-y-8">
-                    
+
                     {/* Intro */}
                     <p className="text-base md:text-lg text-white/80 leading-relaxed">
                       This is the All India Solo Wildcard submission guidelines for the Hyderabad Beatbox Championship 2026. Check the rules and regulations regarding the wildcard submission below and complete your submission using the form link.
@@ -182,11 +178,7 @@ export default async function WildcardPage() {
                         <Calendar className="w-6 h-6 text-sky-400" />
                         Submission Window
                       </h2>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="p-4 bg-white/5 border border-white/5 rounded-xl">
-                          <span className="text-xs text-white/40 block mb-1 uppercase tracking-wider">Opens</span>
-                          <span className="text-base font-bold text-sky-400">10 July 2026</span>
-                        </div>
+                      <div className="grid grid-cols-1 gap-4">
                         <div className="p-4 bg-white/5 border border-white/5 rounded-xl">
                           <span className="text-xs text-white/40 block mb-1 uppercase tracking-wider">Deadline</span>
                           <span className="text-base font-bold text-rose-400">10 August 2026 | 12:00 AM (IST)</span>
@@ -254,7 +246,7 @@ export default async function WildcardPage() {
                         <Clock className="w-6 h-6 text-sky-400" />
                         Performance Duration
                       </h2>
-                      
+
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div className="p-4 bg-white/5 border border-white/5 rounded-xl text-center">
                           <span className="text-xs text-white/40 block mb-1 uppercase tracking-wider">Introduction</span>
@@ -459,9 +451,9 @@ export default async function WildcardPage() {
                         </div>
                         <div className="p-5 bg-white/5 border border-white/5 rounded-xl space-y-1">
                           <span className="text-xs text-white/40 uppercase tracking-wider block">Official Submission Link</span>
-                          <a 
-                            href="https://www.hyderabadbeatboxcommunity.in" 
-                            target="_blank" 
+                          <a
+                            href="https://www.hyderabadbeatboxcommunity.in"
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="text-sm sm:text-base font-bold text-sky-400 hover:text-blue-300 hover:underline block break-all mt-1"
                           >

@@ -12,15 +12,13 @@ export async function GET() {
       // but do not save it to DB yet.
       wildcard = {
         isActive: false,
-        title: 'Beatbox Championship Wildcard Submission 2026 All India',
-        description: `# HYDERABAD BEATBOX CHAMPIONSHIP 2026
+        title: 'HYDERABAD BEATBOX CHAMPIONSHIP 2026 ALL INDIA CATEGORY',
+        description: `# HYDERABAD BEATBOX CHAMPIONSHIP 2026 ALL INDIA CATEGORY
 ## ALL INDIA SOLO WILDCARD GUIDELINES
 
 ---
 
 ## Wildcard Submission Window
-
-**Opens:** 10 July 2026
 
 **Deadline:** 10 August 2026 | 12:00 AM (IST)
 
