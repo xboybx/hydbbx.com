@@ -59,11 +59,11 @@ export default function HomeImageManager() {
           {images.map((image) => (
             <div key={image._id} className="bg-white/5 border border-white/10 p-4 rounded-lg flex flex-col">
               <div className="relative w-full h-48 rounded-lg overflow-hidden mb-3">
-                <Image 
-                  src={image.image} 
-                  alt="Home Image" 
-                  fill 
-                  className="object-cover transition-transform hover:scale-105 duration-500" 
+                <Image
+                  src={image.image}
+                  alt="Home Image"
+                  fill
+                  className="object-cover transition-transform hover:scale-105 duration-500"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>

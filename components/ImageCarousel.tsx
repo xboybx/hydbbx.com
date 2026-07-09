@@ -87,7 +87,7 @@ export default function ImageCarousel() {
           <p className="text-xl md:text-xl text-white/60 max-w-2xl mx-auto">
             Uniting rhythms, creating beats, building community
           </p>
-          {/* {isWildcardActive && (
+          {isWildcardActive && (
             <button
               onClick={() => {
                 window.location.href = "/wildcard";
@@ -96,7 +96,7 @@ export default function ImageCarousel() {
             >
               Submit Wildcards Now!
             </button>
-          )} */}
+          )}
         </div>
       </div>
     </div>

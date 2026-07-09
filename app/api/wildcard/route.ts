@@ -201,7 +201,7 @@ export async function POST(req: NextRequest) {
   try {
     await protect(req);
     const body = await req.json();
-    
+
     let wildcard = await Wildcard.findOne({});
     if (wildcard) {
       wildcard.isActive = body.isActive;
@@ -213,7 +213,7 @@ export async function POST(req: NextRequest) {
     } else {
       wildcard = await Wildcard.create(body);
     }
-    
+
     return NextResponse.json(wildcard, { status: 200 });
   } catch (error: any) {
     if (error.message.includes('Not authorized')) {
