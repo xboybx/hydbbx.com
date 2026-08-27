@@ -81,6 +81,17 @@ In [app/globals.css](file:///d:/Dev%20Workspace/HBX%20Site%20Deployed/hyd%20bbx%
 
 ---
 
+# Project Tracker: Configurable Wildcard Winners (Draw 24) Feature
+
+## 1. Feature Summary
+- **Database Schema:** Created [models/Draw24.ts](file:///d:/Dev%20Workspace/HBX%20Site%20Deployed/hyd%20bbx%20Ful%20fledged%20website%20M(1)%20Deployed/models/Draw24.ts) to store active status (`isActive`), championship title, registration fee (`₹350`), Google Form URL, Instagram handle, and the Top 25 beatboxers roster array.
+- **Backend API Route:** Created [app/api/draw-24/route.ts](file:///d:/Dev%20Workspace/HBX%20Site%20Deployed/hyd%20bbx%20Ful%20fledged%20website%20M(1)%20Deployed/app/api/draw-24/route.ts) with secure GET/POST endpoints (protected via JWT).
+- **Admin Manager:** Created [components/admin/Draw24Manager.tsx](file:///d:/Dev%20Workspace/HBX%20Site%20Deployed/hyd%20bbx%20Ful%20fledged%20website%20M(1)%20Deployed/components/admin/Draw24Manager.tsx) registered in the Admin Dashboard (`/admin/dashboard/draw-24`) to toggle active/inactive status, edit fee/form URL, and add/remove/edit beatboxer names and seed numbers.
+- **Dedicated Subpage:** [app/draw-24/page.tsx](file:///d:/Dev%20Workspace/HBX%20Site%20Deployed/hyd%20bbx%20Ful%20fledged%20website%20M(1)%20Deployed/app/draw-24/page.tsx) renders the Top 25 Beatboxers Roster first, followed by the ₹350 registration fee spotlight and Google Form CTA button. Renders a "Registration Closed" state when disabled.
+- **Home & Nav Integration:** [Header.tsx](file:///d:/Dev%20Workspace/HBX%20Site%20Deployed/hyd%20bbx%20Ful%20fledged%20website%20M(1)%20Deployed/components/Header.tsx) and [ImageCarousel.tsx](file:///d:/Dev%20Workspace/HBX%20Site%20Deployed/hyd%20bbx%20Ful%20fledged%20website%20M(1)%20Deployed/components/ImageCarousel.tsx) dynamically query `/api/draw-24` and render the navigation link and Hero CTA button only when `isActive` is `true`.
+
+---
+
 > [!NOTE]
 > For the comprehensive project history, architecture, and documentation across all features (Blog System, Dome Gallery, Event Details & Social Share, Bento About Section), refer to [PROJECT_CONTEXT.md](file:///d:/Dev%20Workspace/HBX%20Site%20Deployed/hyd%20bbx%20Ful%20fledged%20website%20M(1)%20Deployed/PROJECT_CONTEXT.md).
 

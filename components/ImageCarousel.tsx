@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { LuMicVocal } from "react-icons/lu";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ImageCarousel() {
   const [currentImage, setCurrentImage] = useState(0);
@@ -10,20 +11,30 @@ export default function ImageCarousel() {
   const [images, setImages] = useState<string[]>([]);
   const [isCarouselVisible, setIsCarouselVisible] = useState(false);
   const [isWildcardActive, setIsWildcardActive] = useState(false);
+  const [isDraw24Active, setIsDraw24Active] = useState(false);
 
   useEffect(() => {
-    const checkWildcard = async () => {
+    const checkStatuses = async () => {
       try {
-        const res = await fetch("/api/wildcard");
-        const data = await res.json();
-        if (data && data.isActive) {
-          setIsWildcardActive(true);
+        const [wildcardRes, draw24Res] = await Promise.allSettled([
+          fetch("/api/wildcard"),
+          fetch("/api/draw-24"),
+        ]);
+
+        if (wildcardRes.status === "fulfilled") {
+          const wData = await wildcardRes.value.json();
+          if (wData && wData.isActive) setIsWildcardActive(true);
+        }
+
+        if (draw24Res.status === "fulfilled") {
+          const dData = await draw24Res.value.json();
+          if (dData && dData.isActive) setIsDraw24Active(true);
         }
       } catch (err) {
-        console.error("Error checking wildcard status in ImageCarousel:", err);
+        console.error("Error checking feature statuses in ImageCarousel:", err);
       }
     };
-    checkWildcard();
+    checkStatuses();
   }, []);
 
   useEffect(() => {
@@ -89,16 +100,28 @@ export default function ImageCarousel() {
           <p className="text-sm md:text-base text-white/60">
             Uniting rhythms, creating beats, building community
           </p>
-          {isWildcardActive && (
-            <button
-              onClick={() => {
-                window.location.href = "/wildcard";
-              }}
-              className="mt-2 px-5 py-3 text-white rounded-md font-bold text-xs sm:text-sm hover:scale-105 transition-all duration-300 cursor-pointer inline-block font-sans btn-wildcard-premium"
-            >
-              Submit Wildcards Now!
-            </button>
-          )}
+          <div className="flex flex-wrap gap-3 pt-2">
+            {isDraw24Active && (
+              <Link
+                href="/draw-24"
+                className="px-5 py-3 text-white rounded-md font-bold text-xs sm:text-sm hover:scale-105 transition-all duration-300 cursor-pointer inline-flex items-center gap-2 font-sans btn-wildcard-premium"
+              >
+                <span>Wildcard Winners Registration</span>
+                <span className="bg-white/20 text-[10px] sm:text-[11px] px-1.5 py-0.5 rounded font-mono font-semibold">₹350</span>
+              </Link>
+            )}
+
+            {isWildcardActive && (
+              <button
+                onClick={() => {
+                  window.location.href = "/wildcard";
+                }}
+                className="px-5 py-3 text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded-md font-bold text-xs sm:text-sm hover:scale-105 transition-all duration-300 cursor-pointer inline-block font-sans"
+              >
+                Submit Wildcards Now!
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

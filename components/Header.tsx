@@ -9,6 +9,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWildcardActive, setIsWildcardActive] = useState(false);
+  const [isDraw24Active, setIsDraw24Active] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,25 +20,49 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    const checkWildcard = async () => {
+    const checkStatus = async () => {
       try {
-        const res = await fetch("/api/wildcard");
-        const data = await res.json();
-        if (data && data.isActive) {
-          setIsWildcardActive(true);
+        const [wildcardRes, draw24Res] = await Promise.allSettled([
+          fetch("/api/wildcard"),
+          fetch("/api/draw-24"),
+        ]);
+        
+        if (wildcardRes.status === "fulfilled") {
+          const wData = await wildcardRes.value.json();
+          if (wData && wData.isActive) setIsWildcardActive(true);
+        }
+
+        if (draw24Res.status === "fulfilled") {
+          const dData = await draw24Res.value.json();
+          if (dData && dData.isActive) setIsDraw24Active(true);
         }
       } catch (err) {
-        console.error("Failed to check wildcard status", err);
+        console.error("Failed to check feature statuses", err);
       }
     };
-    checkWildcard();
+    checkStatus();
   }, []);
 
-  const sections = isWildcardActive
-    ? ["home", "about", "wildcard", "events", "gallery", "videos", "blog", "contact"]
-    : ["home", "about", "events", "gallery", "videos", "blog", "contact"];
+  const sections = [
+    "home",
+    "about",
+    ...(isDraw24Active ? ["draw-24"] : []),
+    ...(isWildcardActive ? ["wildcard"] : []),
+    "events",
+    "gallery",
+    "videos",
+    "blog",
+    "contact",
+  ];
 
   const scrollToSection = (id: string) => {
+    if (id === "draw-24") {
+      window.location.href = "/draw-24";
+      setTimeout(() => {
+        setIsMobileMenuOpen(false);
+      }, 300);
+      return;
+    }
     if (id === "wildcard") {
       window.location.href = "/wildcard";
       setTimeout(() => {
@@ -83,9 +108,9 @@ export default function Header() {
             <button
               key={section}
               onClick={() => scrollToSection(section)}
-              className={`nav-link ${section === "wildcard" ? "animate-pulse-glow font-bold" : ""}`}
+              className={`nav-link ${section === "draw-24" ? "animate-pulse-glow font-bold text-sky-400" : section === "wildcard" ? "animate-pulse-glow font-bold text-emerald-400" : ""}`}
             >
-              {section.toUpperCase()}
+              {section === "draw-24" ? "WILDCARD WINNERS" : section.toUpperCase()}
             </button>
           ))}
         </div>
@@ -111,10 +136,10 @@ export default function Header() {
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`block w-full text-left px-4 py-2 nav-link ${section === "wildcard" ? "animate-pulse-glow font-bold" : ""
+                  className={`block w-full text-left px-4 py-2 nav-link ${section === "draw-24" ? "animate-pulse-glow font-bold text-sky-400" : section === "wildcard" ? "animate-pulse-glow font-bold text-emerald-400" : ""
                     }`}
                 >
-                  {section.toUpperCase()}
+                  {section === "draw-24" ? "WILDCARD WINNERS" : section.toUpperCase()}
                 </button>
               ))}
             </div>

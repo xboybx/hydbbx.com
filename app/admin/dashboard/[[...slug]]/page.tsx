@@ -26,6 +26,9 @@ const BlogManager = dynamic(() => import("@/components/admin/BlogManager"), {
 const WildcardManager = dynamic(() => import("@/components/admin/WildcardManager"), {
   loading: () => <DashboardSkeleton />,
 });
+const Draw24Manager = dynamic(() => import("@/components/admin/Draw24Manager"), {
+  loading: () => <DashboardSkeleton />,
+});
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -44,6 +47,7 @@ export default function AdminDashboardPage() {
     if (pathname?.includes("/home-images")) return <HomeImageManager />;
     if (pathname?.includes("/blogs")) return <BlogManager />;
     if (pathname?.includes("/wildcard")) return <WildcardManager />;
+    if (pathname?.includes("/draw-24")) return <Draw24Manager />;
     return null;
   };
 
@@ -71,6 +75,7 @@ export default function AdminDashboardPage() {
     { href: "/admin/dashboard/home-images", label: "Manage Home Images" },
     { href: "/admin/dashboard/blogs", label: "Manage Blogs" },
     { href: "/admin/dashboard/wildcard", label: "Manage Wildcard" },
+    { href: "/admin/dashboard/draw-24", label: "Manage Winners (Draw 24)" },
   ];
 
   return (
@@ -106,7 +111,7 @@ export default function AdminDashboardPage() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 mb-8"
           >
             {navItems.map((item) => (
               <Link href={item.href} key={item.href}>
