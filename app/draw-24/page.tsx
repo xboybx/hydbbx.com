@@ -9,10 +9,11 @@ import {
   Sparkles, 
   ArrowLeft, 
   CreditCard, 
-  Mic2,
   AlertCircle,
   HelpCircle,
-  Lock
+  Lock,
+  ChevronRight,
+  ShieldCheck
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -79,14 +80,14 @@ export default async function Draw24Page() {
   const rosterList = Array.isArray(beatboxers) && beatboxers.length > 0 ? beatboxers : DEFAULT_25_BEATBOXERS;
 
   return (
-    <div className="min-h-screen bg-[#050507] text-white flex flex-col font-sans selection:bg-blue-500 selection:text-white relative overflow-hidden">
-      {/* Dynamic Background Glowing Orbs */}
-      <div className="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-cyan-500/5 rounded-full blur-[180px] pointer-events-none" />
+    <div className="min-h-screen bg-black text-white flex flex-col font-sans selection:bg-[#0066FF] selection:text-white relative overflow-hidden">
+      {/* Cohesive HBX Ambient Glows */}
+      <div className="fixed top-[-10%] left-[-10%] w-[550px] h-[550px] bg-[#0066FF]/10 rounded-full blur-[150px] pointer-events-none" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#0066FF]/8 rounded-full blur-[170px] pointer-events-none" />
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/5 rounded-full blur-[200px] pointer-events-none" />
 
       {/* Top Navigation Bar */}
-      <header className="border-b border-white/10 bg-black/70 backdrop-blur-xl sticky top-0 z-50 transition-all">
+      <header className="border-b border-white/10 bg-black/80 backdrop-blur-xl sticky top-0 z-50 transition-all">
         <div className="container mx-auto h-20 px-6 md:px-10 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-105 duration-300">
             <img className="h-11 md:h-12 w-auto" src="/HBX logoo.png" alt="Hyderabad Beatbox Logo" />
@@ -94,7 +95,7 @@ export default async function Draw24Page() {
 
           <Link
             href="/"
-            className="text-white/80 hover:text-white transition-all duration-300 text-xs md:text-sm font-medium uppercase tracking-wider bg-white/5 hover:bg-white/10 border border-white/10 px-4 md:px-5 py-2.5 rounded-full flex items-center gap-2 group shadow-sm hover:border-white/20"
+            className="text-white/80 hover:text-white transition-all duration-300 text-xs md:text-sm uppercase tracking-wider bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/25 px-5 py-2.5 rounded-full flex items-center gap-2 group shadow-sm"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             <span>Back to Home</span>
@@ -106,12 +107,12 @@ export default async function Draw24Page() {
       {!isActive ? (
         /* Inactive / Closed State */
         <div className="flex-grow container mx-auto px-4 flex flex-col items-center justify-center text-center py-24 max-w-xl relative z-10">
-          <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-8 border border-white/10 shadow-lg shadow-white/5">
+          <div className="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10 shadow-xl shadow-black/50">
             <Lock className="w-10 h-10 text-white/40" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold mb-4 text-white">Registration Closed</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold mb-4 text-white tracking-tight">Registration Closed</h1>
           <p className="text-white/60 mb-10 text-sm md:text-base leading-relaxed">
-            Wildcard winners registration for the <strong className="text-white">{title}</strong> is currently closed or has concluded. Follow us on Instagram <strong className="text-white">{instagramHandle}</strong> for tournament bracket updates and schedule releases.
+            Wildcard winners registration for the <strong className="text-white">{title}</strong> is currently closed or has concluded. Follow us on Instagram <strong className="text-[#0066FF]">{instagramHandle}</strong> for tournament bracket updates and schedule releases.
           </p>
           <Link
             href="/"
@@ -125,15 +126,15 @@ export default async function Draw24Page() {
         <main className="flex-grow container mx-auto px-5 sm:px-8 md:px-12 py-10 md:py-16 max-w-6xl relative z-10">
           
           {/* Header Hero Banner */}
-          <div className="text-center max-w-3xl mx-auto space-y-4 mb-12 md:mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs md:text-sm font-semibold tracking-wide uppercase shadow-inner">
-              <Sparkles className="w-4 h-4 animate-pulse text-blue-400" />
+          <div className="text-center max-w-3xl mx-auto space-y-4 mb-14 md:mb-18">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0066FF]/10 border border-[#0066FF]/30 text-[#0066FF] text-xs md:text-sm font-semibold tracking-wider uppercase shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 animate-pulse text-[#0066FF]" />
               <span>Official Wildcard Results</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight uppercase">
               Wildcard Winners <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+              <span className="text-[#0066FF]">
                 Roster & Registration
               </span>
             </h1>
@@ -144,17 +145,17 @@ export default async function Draw24Page() {
 
             {/* Quick Key Metrics Bar */}
             <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 max-w-md mx-auto">
-              <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col items-center justify-center">
-                <span className="text-xs text-white/50 uppercase font-semibold">Total Selected</span>
-                <span className="text-lg md:text-xl font-bold text-blue-400 flex items-center gap-1.5 mt-0.5">
-                  <Trophy className="w-4 h-4" /> {rosterList.length} Artists
+              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 hover:border-[#0066FF]/40 hover:bg-white/[0.05]">
+                <span className="text-xs text-white/50 uppercase font-semibold tracking-wider">Total Selected</span>
+                <span className="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2 mt-1">
+                  <Trophy className="w-4 h-4 text-[#0066FF]" /> {rosterList.length} Artists
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col items-center justify-center">
-                <span className="text-xs text-white/50 uppercase font-semibold">Registration Fee</span>
-                <span className="text-lg md:text-xl font-bold text-emerald-400 flex items-center gap-1.5 mt-0.5">
-                  <CreditCard className="w-4 h-4" /> {registrationFee}
+              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 hover:border-emerald-500/40 hover:bg-white/[0.05]">
+                <span className="text-xs text-white/50 uppercase font-semibold tracking-wider">Registration Fee</span>
+                <span className="text-xl md:text-2xl font-extrabold text-emerald-400 flex items-center gap-2 mt-1">
+                  <CreditCard className="w-4 h-4 text-emerald-400" /> {registrationFee}
                 </span>
               </div>
             </div>
@@ -164,47 +165,48 @@ export default async function Draw24Page() {
           <section className="space-y-6 mb-16">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-5">
               <div>
-                <div className="flex items-center gap-2 text-blue-400 text-xs font-bold uppercase tracking-widest mb-1">
-                  <Trophy className="w-4 h-4" /> Official Selected Roster
+                <div className="flex items-center gap-2 text-[#0066FF] text-xs font-bold uppercase tracking-widest mb-1.5">
+                  <Trophy className="w-4 h-4 text-[#0066FF]" /> Official Selected Roster
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                   Top Qualified Beatboxers ({rosterList.length})
                 </h2>
               </div>
-              <p className="text-xs sm:text-sm text-white/50">
-                Official Selected Draw List (#01 - #{String(rosterList.length).padStart(2, "0")})
-              </p>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/60">
+                <span>Draw List #01 - #{String(rosterList.length).padStart(2, "0")}</span>
+              </div>
             </div>
 
             {/* Grid of Beatboxers */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 md:gap-4">
               {rosterList.map((bbx: any) => {
                 const formattedNumber = String(bbx.id).padStart(2, "0");
                 return (
                   <div
                     key={bbx.id}
-                    className="group relative p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1 backdrop-blur-md flex items-center justify-between"
+                    className="group relative p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/10 hover:border-[#0066FF]/50 transition-all duration-300 hover:shadow-xl hover:shadow-[#0066FF]/10 hover:-translate-y-1 backdrop-blur-md flex items-center justify-between"
                   >
                     <div className="flex items-center gap-3.5">
                       {/* Seed Number Tag */}
-                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-500/10 border border-blue-500/30 flex items-center justify-center text-blue-300 font-mono font-bold text-sm group-hover:scale-105 group-hover:border-blue-400 group-hover:text-white transition-all shadow-inner">
+                      <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/80 font-mono font-bold text-sm group-hover:bg-[#0066FF]/15 group-hover:border-[#0066FF]/40 group-hover:text-[#0066FF] transition-all shadow-inner">
                         #{formattedNumber}
                       </div>
 
                       {/* Artist Name & Tag */}
                       <div>
-                        <h3 className="font-bold text-white text-base group-hover:text-blue-300 transition-colors">
+                        <h3 className="font-bold text-white text-base group-hover:text-[#0066FF] transition-colors">
                           {bbx.name}
                         </h3>
-                        <span className="text-[11px] text-emerald-400/80 tracking-wide uppercase font-medium">
+                        <span className="text-[11px] text-emerald-400 font-medium tracking-wide uppercase flex items-center gap-1 mt-0.5">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-400" />
                           {bbx.status || "Confirmed"}
                         </span>
                       </div>
                     </div>
 
-                    {/* Confirmed Checkmark Badge */}
-                    <div className="w-6 h-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0" title="Confirmed Selection">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
+                    {/* Subtle Right Arrow / Status Cue */}
+                    <div className="text-white/20 group-hover:text-[#0066FF] transition-colors shrink-0">
+                      <ChevronRight className="w-4 h-4" />
                     </div>
                   </div>
                 );
@@ -213,37 +215,38 @@ export default async function Draw24Page() {
           </section>
 
           {/* 2. REGISTRATION & FEE SPOTLIGHT SECTION */}
-          <section className="mb-14 rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 bg-gradient-to-br from-blue-950/40 via-neutral-900/80 to-black border border-blue-500/30 shadow-2xl shadow-blue-950/50 backdrop-blur-xl relative overflow-hidden">
-            {/* Subtle glow edge inside card */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+          <section className="mb-14 rounded-3xl p-6 sm:p-8 md:p-10 bg-black/60 border border-white/15 shadow-2xl shadow-black/80 backdrop-blur-xl relative overflow-hidden">
+            {/* Ambient Corner Glow */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#0066FF]/10 rounded-full blur-[90px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-[90px] pointer-events-none" />
 
             <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-              <div className="space-y-3 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <CheckCircle2 className="w-3.5 h-3.5" /> Registration Open for Qualified Artists
+              <div className="space-y-4 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <ShieldCheck className="w-3.5 h-3.5" /> Registration Open for Qualified Artists
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight">
                   Complete Your Registration
                 </h2>
-                <p className="text-white/70 text-sm sm:text-base max-w-xl">
+                <p className="text-white/70 text-sm sm:text-base max-w-xl leading-relaxed">
                   All confirmed wildcard winners must fill out the Google Form and pay the official entry fee of{" "}
                   <span className="text-emerald-400 font-bold text-lg">{registrationFee}</span> to lock in their spot for the championship.
                 </p>
                 
-                <ul className="text-xs sm:text-sm text-white/60 space-y-1.5 pt-2">
-                  <li className="flex items-center gap-2 justify-center lg:justify-start">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                <div className="space-y-2 pt-2">
+                  <div className="flex items-center gap-2.5 justify-center lg:justify-start text-xs sm:text-sm text-white/70">
+                    <span className="w-5 h-5 rounded-full bg-[#0066FF]/20 text-[#0066FF] border border-[#0066FF]/30 flex items-center justify-center text-xs font-bold shrink-0">1</span>
                     <span>Fill in your artist name, contact information, and registration details.</span>
-                  </li>
-                  <li className="flex items-center gap-2 justify-center lg:justify-start">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                    <span>Pay <strong className="text-white">{registrationFee}</strong> through the payment method specified in the form.</span>
-                  </li>
-                  <li className="flex items-center gap-2 justify-center lg:justify-start">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                    <span>Attach the payment screenshot/reference ID in the form submission.</span>
-                  </li>
-                </ul>
+                  </div>
+                  <div className="flex items-center gap-2.5 justify-center lg:justify-start text-xs sm:text-sm text-white/70">
+                    <span className="w-5 h-5 rounded-full bg-[#0066FF]/20 text-[#0066FF] border border-[#0066FF]/30 flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                    <span>Pay <strong className="text-emerald-400 font-semibold">{registrationFee}</strong> through the payment method specified in the form.</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 justify-center lg:justify-start text-xs sm:text-sm text-white/70">
+                    <span className="w-5 h-5 rounded-full bg-[#0066FF]/20 text-[#0066FF] border border-[#0066FF]/30 flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                    <span>Attach the payment screenshot or reference ID in the form submission.</span>
+                  </div>
+                </div>
               </div>
 
               {/* Action CTA Button */}
@@ -252,13 +255,13 @@ export default async function Draw24Page() {
                   href={googleFormUrl || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-400 text-white rounded-xl font-bold text-base sm:text-lg tracking-wide shadow-xl shadow-blue-600/30 hover:shadow-blue-500/50 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3 border border-white/20"
+                  className="w-full sm:w-auto px-9 py-4.5 bg-[#0066FF] hover:bg-blue-600 text-white rounded-full font-bold text-base sm:text-lg tracking-wide shadow-xl shadow-[#0066FF]/30 hover:shadow-[#0066FF]/50 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3 border border-white/10"
                 >
                   <span>Register via Google Form</span>
                   <ExternalLink className="w-5 h-5" />
                 </a>
-                <span className="text-xs text-white/50 flex items-center gap-1">
-                  <AlertCircle className="w-3.5 h-3.5 text-blue-400" />
+                <span className="text-xs text-white/50 flex items-center gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 text-[#0066FF]" />
                   Registration Fee: <strong className="text-emerald-400 font-semibold">{registrationFee}</strong> per qualified artist
                 </span>
               </div>
@@ -266,16 +269,16 @@ export default async function Draw24Page() {
           </section>
 
           {/* Help & Support Notice */}
-          <div className="mt-12 text-center text-xs text-white/40 flex items-center justify-center gap-2">
-            <HelpCircle className="w-4 h-4 text-white/30" />
-            <span>Have questions or need assistance? Reach out to us on Instagram <strong className="text-white/60">{instagramHandle}</strong> or contact the HBX organizing crew.</span>
+          <div className="mt-12 text-center text-xs sm:text-sm text-white/50 flex items-center justify-center gap-2">
+            <HelpCircle className="w-4 h-4 text-white/40" />
+            <span>Have questions or need assistance? Reach out to us on Instagram <strong className="text-[#0066FF]">{instagramHandle}</strong> or contact the HBX organizing crew.</span>
           </div>
 
         </main>
       )}
 
       {/* Footer Bar */}
-      <footer className="border-t border-white/10 bg-black/60 py-6 text-center text-xs text-white/40">
+      <footer className="border-t border-white/10 bg-black/80 py-6 text-center text-xs text-white/40 mt-auto">
         <p>&copy; {new Date().getFullYear()} Hyderabad Beatbox Community. All rights reserved.</p>
       </footer>
     </div>
